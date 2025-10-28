@@ -1,1 +1,94 @@
-# spatial-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spatial Intelligence Test</title>
+<style>
+  body { font-family: "Segoe UI", sans-serif; background: #1a1a2e; color: #fff; margin:0; display:flex; justify-content:center; align-items:center; height:100vh;}
+  .container { background: rgba(255,255,255,0.1); padding:2em; border-radius:12px; width:90%; max-width:600px; text-align:center;}
+  h1 { margin-bottom:0.5em; }
+  .question { font-size:1.2em; margin-bottom:1em; }
+  .options button { background:#0f3460; border:none; color:#fff; padding:0.6em 1em; margin:0.3em; border-radius:8px; font-size:1em; cursor:pointer; transition:0.2s; }
+  .options button:hover { background:#e94560; }
+  .progress { margin-top:1.2em; font-size:0.9em; opacity:0.8; }
+  .result { font-size:1.1em; margin-top:1em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🧭 Spatial Intelligence Test</h1>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div class="progress" id="progress"></div>
+  <div class="result" id="result"></div>
+</div>
+<script>
+const questions = [
+  "I can easily picture objects in my mind and mentally rotate them.",
+  "When I see a building or sculpture, I instinctively think about its shape and structure.",
+  "I can imagine how something will look if its color or material changes.",
+  "When I look at clouds or patterns, I often see shapes or figures in them.",
+  "I can clearly recall the layout of places I’ve been, even years later.",
+  "I rarely get lost in unfamiliar places.",
+  "I can retrace my route back home without needing directions.",
+  "I’m good at estimating distances between locations.",
+  "I enjoy using or creating maps.",
+  "I can visualize a map of my city or neighborhood in my head.",
+  "I can assemble objects (furniture, LEGO, models) without relying heavily on instructions.",
+  "I enjoy activities like woodworking, crafting, or 3D design.",
+  "I understand how parts fit together to make a whole.",
+  "I can mentally picture the inside of a machine or object I’ve never opened.",
+  "I can accurately visualize what something looks like from another perspective.",
+  "I have a strong sense of balance, proportion, and symmetry.",
+  "I’m drawn to visual art, architecture, or photography.",
+  "I notice visual details (shapes, colors, patterns) that others often overlook.",
+  "I like organizing or decorating spaces to make them aesthetically pleasing.",
+  "I often visualize ideas before expressing them.",
+  "I’m good at solving jigsaw puzzles or spatial reasoning puzzles.",
+  "I excel in video games that require navigation or spatial awareness.",
+  "I can mentally predict how a shape will look after being folded, cut, or turned.",
+  "I can easily interpret diagrams, blueprints, or infographics.",
+  "I can see patterns and spatial relationships in data or visual information.",
+  "I can judge if furniture will fit in a room before moving it.",
+  "I can pack a suitcase or car trunk efficiently.",
+  "I have a good sense of direction (I know which way is north/south, etc.).",
+  "I enjoy thinking in images more than in words.",
+  "I often visualize goals or plans in my mind before taking action."
+];
+let current = 0, score = 0;
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const progressEl = document.getElementById("progress");
+const resultEl = document.getElementById("result");
+
+function showQuestion(){
+  if(current < questions.length){
+    questionEl.textContent = questions[current];
+    progressEl.textContent = `Question ${current+1} of ${questions.length}`;
+    optionsEl.innerHTML = "";
+    for(let i=1;i<=5;i++){
+      const btn=document.createElement("button");
+      btn.textContent=i;
+      btn.onclick=()=>{score+=i; current++; showQuestion();}
+      optionsEl.appendChild(btn);
+    }
+  }else{showResult();}
+}
+
+function showResult(){
+  questionEl.textContent="✅ Test Completed!";
+  optionsEl.innerHTML="";
+  progressEl.textContent="";
+  let interp="";
+  if(score>=120) interp="Exceptionally strong spatial intelligence — visual thinking is one of your dominant strengths.";
+  else if(score>=90) interp="Above average — you’re comfortable and capable with spatial reasoning.";
+  else if(score>=60) interp="Moderate — spatial reasoning is one of several thinking styles you use.";
+  else interp="Below average — you may think more verbally, logically, or kinesthetically.";
+  resultEl.innerHTML=`<strong>Your total score:</strong> ${score} / 150<br><br>${interp}`;
+}
+
+showQuestion();
+</script>
+</body>
+</html>
